@@ -1,0 +1,48 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <ProjectGuid>{69A4B05B-5109-46EE-9D12-E3A83406A1FE}</ProjectGuid>
+    </PropertyGroup>
+    <ItemGroup>
+        <Projects Include="multi_device_application\LocationSensorDemo.dproj">
+            <Dependencies>android_service\LocationService.dproj</Dependencies>
+        </Projects>
+        <Projects Include="android_service\LocationService.dproj">
+            <Dependencies/>
+        </Projects>
+    </ItemGroup>
+    <ProjectExtensions>
+        <Borland.Personality>Default.Personality.12</Borland.Personality>
+        <Borland.ProjectType/>
+        <BorlandProject>
+            <Default.Personality/>
+        </BorlandProject>
+    </ProjectExtensions>
+    <Target Name="LocationSensorDemo" DependsOnTargets="LocationService">
+        <MSBuild Projects="multi_device_application\LocationSensorDemo.dproj"/>
+    </Target>
+    <Target Name="LocationSensorDemo:Clean" DependsOnTargets="LocationService:Clean">
+        <MSBuild Projects="multi_device_application\LocationSensorDemo.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="LocationSensorDemo:Make" DependsOnTargets="LocationService:Make">
+        <MSBuild Projects="multi_device_application\LocationSensorDemo.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="LocationService">
+        <MSBuild Projects="android_service\LocationService.dproj"/>
+    </Target>
+    <Target Name="LocationService:Clean">
+        <MSBuild Projects="android_service\LocationService.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="LocationService:Make">
+        <MSBuild Projects="android_service\LocationService.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Build">
+        <CallTarget Targets="LocationSensorDemo;LocationService"/>
+    </Target>
+    <Target Name="Clean">
+        <CallTarget Targets="LocationSensorDemo:Clean;LocationService:Clean"/>
+    </Target>
+    <Target Name="Make">
+        <CallTarget Targets="LocationSensorDemo:Make;LocationService:Make"/>
+    </Target>
+    <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
+</Project>
