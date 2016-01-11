@@ -9,6 +9,9 @@ The patch is figured out by Daniele Spinetti and Daniele Teti.
 ##Language
 - Object Pascal
 
+##Delphi Version Supported
+- Seattle
+
 ##Platforms supported 
 - Android
 
