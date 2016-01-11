@@ -4,6 +4,6 @@
     <Transaction>2016/01/10 18.42.18.319,C:\DEV\Delphi\DelphiDemos\LocationSensorPatch\LocationSensorPatch.groupproj=C:\Users\d.spinetti\Documents\Embarcadero\Studio\Projects\ProjectGroup1.groupproj</Transaction>
   </Transactions>
   <Default.Personality>
-    <Projects ActiveProject="C:\DEV\Delphi\DelphiDemos\LocationSensorPatch\android_service\LocationService.dproj"/>
+    <Projects ActiveProject="C:\DEV\Delphi\DelphiDemos\LocationSensorPatch\multi_device_application\LocationSensorDemo.dproj"/>
   </Default.Personality>
 </BorlandProject>
