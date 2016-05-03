@@ -1,0 +1,158 @@
+object HeaderFooterForm: THeaderFooterForm
+  Left = 0
+  Top = 0
+  Caption = 'Header Footer Form'
+  ClientHeight = 567
+  ClientWidth = 384
+  FormFactor.Width = 1440
+  FormFactor.Height = 900
+  FormFactor.Devices = [Desktop]
+  OnShow = FormShow
+  DesignerMasterStyle = 3
+  object Header: TToolBar
+    Size.Width = 384.000000000000000000
+    Size.Height = 48.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 0
+    object HeaderLabel: TLabel
+      Align = Contents
+      Size.Width = 384.000000000000000000
+      Size.Height = 48.000000000000000000
+      Size.PlatformDefault = False
+      StyleLookup = 'toollabel'
+      TextSettings.HorzAlign = Center
+      Text = 'Marvel Character'
+    end
+    object btnNext: TButton
+      Align = Right
+      Position.X = 336.000000000000000000
+      Size.Width = 48.000000000000000000
+      Size.Height = 48.000000000000000000
+      Size.PlatformDefault = False
+      StyleLookup = 'arrowrighttoolbutton'
+      TabOrder = 0
+      Text = 'btnNext'
+      OnClick = btnNextClick
+    end
+    object btnPrevious: TButton
+      Align = Left
+      Size.Width = 48.000000000000000000
+      Size.Height = 48.000000000000000000
+      Size.PlatformDefault = False
+      StyleLookup = 'arrowlefttoolbutton'
+      TabOrder = 1
+      Text = 'btnPrevious'
+      OnClick = btnPreviousClick
+    end
+  end
+  object Footer: TToolBar
+    Align = Bottom
+    Position.Y = 519.000000000000000000
+    Size.Width = 384.000000000000000000
+    Size.Height = 48.000000000000000000
+    Size.PlatformDefault = False
+    StyleLookup = 'bottomtoolbar'
+    TabOrder = 1
+    object FooterLayout: TLayout
+      Align = Client
+      Size.Width = 384.000000000000000000
+      Size.Height = 48.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 1
+      object AniIndicator1: TAniIndicator
+        Align = Right
+        Position.X = 334.000000000000000000
+        Size.Width = 50.000000000000000000
+        Size.Height = 48.000000000000000000
+        Size.PlatformDefault = False
+      end
+      object Label1: TLabel
+        Align = Client
+        Margins.Left = 10.000000000000000000
+        Margins.Top = 10.000000000000000000
+        Margins.Right = 10.000000000000000000
+        Margins.Bottom = 10.000000000000000000
+        Size.Width = 314.000000000000000000
+        Size.Height = 28.000000000000000000
+        Size.PlatformDefault = False
+        Text = 'Loading...'
+      end
+    end
+  end
+  object ScaledLayout1: TScaledLayout
+    Align = Client
+    OriginalWidth = 384.000000000000000000
+    OriginalHeight = 471.000000000000000000
+    Size.Width = 384.000000000000000000
+    Size.Height = 471.000000000000000000
+    Size.PlatformDefault = False
+    object Text1: TText
+      Anchors = [akLeft, akRight]
+      Position.Y = 30.000000000000000000
+      Size.Width = 385.000000000000000000
+      Size.Height = 40.000000000000000000
+      Size.PlatformDefault = False
+      Text = 'Character Name'
+      TextSettings.Font.Size = 30.000000000000000000
+      TextSettings.WordWrap = False
+    end
+    object Image1: TImage
+      MultiResBitmap = <
+        item
+        end>
+      Position.X = 64.000000000000000000
+      Position.Y = 120.000000000000000000
+      Size.Width = 257.000000000000000000
+      Size.Height = 289.000000000000000000
+      Size.PlatformDefault = False
+    end
+  end
+  object RESTClient1: TRESTClient
+    Accept = 'application/json, text/plain; q=0.9, text/html;q=0.8,'
+    AcceptCharset = 'UTF-8, *;q=0.8'
+    AcceptEncoding = 'identity'
+    BaseURL = 'http://gateway.marvel.com/v1/public'
+    Params = <>
+    HandleRedirects = True
+    Left = 328
+    Top = 208
+  end
+  object RESTRequest1: TRESTRequest
+    Client = RESTClient1
+    Params = <
+      item
+        Kind = pkURLSEGMENT
+        name = 'APIKEY'
+        Options = [poAutoCreated]
+        Value = '0bc3c1a0b54b6e8a19c9cc3345c9bfe8'
+      end
+      item
+        Kind = pkURLSEGMENT
+        name = 'TS'
+        Options = [poAutoCreated]
+      end
+      item
+        Kind = pkURLSEGMENT
+        name = 'HASH'
+        Options = [poAutoCreated]
+      end
+      item
+        Kind = pkURLSEGMENT
+        name = 'OFFSET'
+        Options = [poAutoCreated]
+      end>
+    Resource = 
+      'characters?limit=1&offset={OFFSET}&ts={TS}&apikey={APIKEY}&hash=' +
+      '{HASH}'
+    Response = RESTResponse1
+    SynchronizedEvents = False
+    OnHTTPProtocolError = RESTRequest1HTTPProtocolError
+    Left = 320
+    Top = 344
+  end
+  object RESTResponse1: TRESTResponse
+    ContentType = 'application/json'
+    Left = 320
+    Top = 280
+  end
+end
