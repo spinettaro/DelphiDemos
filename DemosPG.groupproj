@@ -1,0 +1,60 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <ProjectGuid>{8591DA3F-37B9-4CCC-AD11-E5DE487E855C}</ProjectGuid>
+    </PropertyGroup>
+    <ItemGroup>
+        <Projects Include="AccessMarvelDeveloperAPI\MarvelAPI.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="AutomateSaveState\SaveState.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="InterstitialAdMoB\InterstitialAdMob.dproj">
+            <Dependencies/>
+        </Projects>
+    </ItemGroup>
+    <ProjectExtensions>
+        <Borland.Personality>Default.Personality.12</Borland.Personality>
+        <Borland.ProjectType/>
+        <BorlandProject>
+            <Default.Personality/>
+        </BorlandProject>
+    </ProjectExtensions>
+    <Target Name="MarvelAPI">
+        <MSBuild Projects="AccessMarvelDeveloperAPI\MarvelAPI.dproj"/>
+    </Target>
+    <Target Name="MarvelAPI:Clean">
+        <MSBuild Projects="AccessMarvelDeveloperAPI\MarvelAPI.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="MarvelAPI:Make">
+        <MSBuild Projects="AccessMarvelDeveloperAPI\MarvelAPI.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="SaveState">
+        <MSBuild Projects="AutomateSaveState\SaveState.dproj"/>
+    </Target>
+    <Target Name="SaveState:Clean">
+        <MSBuild Projects="AutomateSaveState\SaveState.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="SaveState:Make">
+        <MSBuild Projects="AutomateSaveState\SaveState.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="InterstitialAdMob">
+        <MSBuild Projects="InterstitialAdMoB\InterstitialAdMob.dproj"/>
+    </Target>
+    <Target Name="InterstitialAdMob:Clean">
+        <MSBuild Projects="InterstitialAdMoB\InterstitialAdMob.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="InterstitialAdMob:Make">
+        <MSBuild Projects="InterstitialAdMoB\InterstitialAdMob.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Build">
+        <CallTarget Targets="MarvelAPI;SaveState;InterstitialAdMob"/>
+    </Target>
+    <Target Name="Clean">
+        <CallTarget Targets="MarvelAPI:Clean;SaveState:Clean;InterstitialAdMob:Clean"/>
+    </Target>
+    <Target Name="Make">
+        <CallTarget Targets="MarvelAPI:Make;SaveState:Make;InterstitialAdMob:Make"/>
+    </Target>
+    <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
+</Project>
