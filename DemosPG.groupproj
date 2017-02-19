@@ -12,6 +12,9 @@
         <Projects Include="InterstitialAdMoB\InterstitialAdMob.dproj">
             <Dependencies/>
         </Projects>
+        <Projects Include="TwoFingerPan\TwoFingerPan.dproj">
+            <Dependencies/>
+        </Projects>
     </ItemGroup>
     <ProjectExtensions>
         <Borland.Personality>Default.Personality.12</Borland.Personality>
@@ -47,14 +50,23 @@
     <Target Name="InterstitialAdMob:Make">
         <MSBuild Projects="InterstitialAdMoB\InterstitialAdMob.dproj" Targets="Make"/>
     </Target>
+    <Target Name="TwoFingerPan">
+        <MSBuild Projects="TwoFingerPan\TwoFingerPan.dproj"/>
+    </Target>
+    <Target Name="TwoFingerPan:Clean">
+        <MSBuild Projects="TwoFingerPan\TwoFingerPan.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="TwoFingerPan:Make">
+        <MSBuild Projects="TwoFingerPan\TwoFingerPan.dproj" Targets="Make"/>
+    </Target>
     <Target Name="Build">
-        <CallTarget Targets="MarvelAPI;SaveState;InterstitialAdMob"/>
+        <CallTarget Targets="MarvelAPI;SaveState;InterstitialAdMob;TwoFingerPan"/>
     </Target>
     <Target Name="Clean">
-        <CallTarget Targets="MarvelAPI:Clean;SaveState:Clean;InterstitialAdMob:Clean"/>
+        <CallTarget Targets="MarvelAPI:Clean;SaveState:Clean;InterstitialAdMob:Clean;TwoFingerPan:Clean"/>
     </Target>
     <Target Name="Make">
-        <CallTarget Targets="MarvelAPI:Make;SaveState:Make;InterstitialAdMob:Make"/>
+        <CallTarget Targets="MarvelAPI:Make;SaveState:Make;InterstitialAdMob:Make;TwoFingerPan:Make"/>
     </Target>
     <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
 </Project>
