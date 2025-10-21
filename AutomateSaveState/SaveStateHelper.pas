@@ -133,7 +133,7 @@ begin
     try
       for I := 0 to Self.ComponentCount - 1 do
       begin
-        if not(Self.Components[I] is TFmxObject) then
+        if (Self.Components[I].Name = '') or not(Self.Components[I] is TFmxObject) then
           continue;
         FMXObj := Self.Components[I] as TFmxObject;
         FMXJObj := TJSONObject.Create;
