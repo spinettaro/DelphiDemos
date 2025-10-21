@@ -59,6 +59,8 @@ begin
           if not(Self.Components[I] is TFmxObject) then
             continue;
           FMXObj := Self.Components[I] as TFmxObject;
+          if FMXObj.Name = '' then
+            Continue;
           FMXJObj := FormJSONObject.Values[FMXObj.Name] as TJSONObject;
           case FMXObj.Data.Kind of
             tkUnknown:
