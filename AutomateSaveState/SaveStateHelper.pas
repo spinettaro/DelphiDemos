@@ -47,6 +47,7 @@ var
   I: Integer;
   FMXObj: TFmxObject;
   FMXJObj: TJSONObject;
+  FMXJValue: TJSONValue;
 begin
   try
     SaveState.StoragePath := TPath.GetHomePath;
@@ -115,15 +116,15 @@ begin
           end;
 
           // Tags
-          FMXJObj := FormJSONObject.Values[FMXObj.Name + TAG] as TJSONObject;
-          if Assigned(FMXJObj) then
-            FMXObj.Tag := (FMXJObj.GetValue(TAG) as TJSONNumber).AsInt;
-          FMXJObj := FormJSONObject.Values[FMXObj.Name + TAG_FLOAT] as TJSONObject;
-          if Assigned(FMXJObj) then
-            FMXObj.TagFloat := (FMXJObj.GetValue(TAG_FLOAT) as TJSONNumber).AsDouble;
-          FMXJObj := FormJSONObject.Values[FMXObj.Name + TAG_STRING] as TJSONObject;
-          if Assigned(FMXJObj) then
-            FMXObj.TagString := (FMXJObj.GetValue(TAG_STRING) as TJSONString).Value;
+          FMXJValue := FMXJObj.GetValue(TAG);
+          if Assigned(FMXJValue) and (FMXJValue is TJSONNumber) then
+            FMXObj.Tag := (FMXJValue as TJSONNumber).AsInt;
+          FMXJValue := FMXJObj.GetValue(TAG_FLOAT);
+          if Assigned(FMXJValue) and (FMXJValue is TJSONNumber) then
+            FMXObj.TagFloat := (FMXJValue as TJSONNumber).AsDouble;
+          FMXJValue := FMXJObj.GetValue(TAG_STRING);
+          if Assigned(FMXJValue) and (FMXJValue is TJSONString) then
+            FMXObj.TagString := (FMXJValue as TJSONString).Value;
         end;
       finally
         FormJSONObject.Free;
@@ -200,23 +201,15 @@ begin
           tkProcedure:
             ;
         end;
-        FormJSONObject.AddPair(FMXObj.Name, FMXJObj);
 
         // Tags
-        FMXJObj := TJSONObject.Create;
         FMXJObj.AddPair(TAG,
           TJSONNumber.Create(FMXObj.Tag));
-        FormJSONObject.AddPair(FMXObj.Name + TAG, FMXJObj);
-
-        FMXJObj := TJSONObject.Create;
         FMXJObj.AddPair(TAG_FLOAT,
           TJSONNumber.Create(FMXObj.TagFloat));
-        FormJSONObject.AddPair(FMXObj.Name + TAG_FLOAT, FMXJObj);
-
-        FMXJObj := TJSONObject.Create;
         FMXJObj.AddPair(TAG_STRING, FMXObj.TagString);
-        FormJSONObject.AddPair(FMXObj.Name + TAG_STRING, FMXJObj);
 
+        FormJSONObject.AddPair(FMXObj.Name, FMXJObj);
       end;
       SaveState.Stream.Clear;
       W := TBinaryWriter.Create(SaveState.Stream);
