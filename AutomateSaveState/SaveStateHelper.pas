@@ -26,6 +26,9 @@ type
   TSaveStateHelper = class helper for TCustomForm
   public const
     DATA_FIELD = 'data';
+    TAG = 'tag';
+    TAG_FLOAT = 'tagfloat';
+    TAG_STRING = 'tagstring';
     procedure SaveFormState;
     procedure LoadFormState;
   end;
@@ -44,6 +47,7 @@ var
   I: Integer;
   FMXObj: TFmxObject;
   FMXJObj: TJSONObject;
+  FMXJValue: TJSONValue;
 begin
   try
     SaveState.StoragePath := TPath.GetHomePath;
@@ -60,6 +64,9 @@ begin
             continue;
           FMXObj := Self.Components[I] as TFmxObject;
           FMXJObj := FormJSONObject.Values[FMXObj.Name] as TJSONObject;
+          if not Assigned(FMXJObj) then
+            Continue;
+
           case FMXObj.Data.Kind of
             tkUnknown:
               ;
@@ -107,6 +114,17 @@ begin
             tkProcedure:
               ;
           end;
+
+          // Tags
+          FMXJValue := FMXJObj.GetValue(TAG);
+          if Assigned(FMXJValue) and (FMXJValue is TJSONNumber) then
+            FMXObj.Tag := (FMXJValue as TJSONNumber).AsInt;
+          FMXJValue := FMXJObj.GetValue(TAG_FLOAT);
+          if Assigned(FMXJValue) and (FMXJValue is TJSONNumber) then
+            FMXObj.TagFloat := (FMXJValue as TJSONNumber).AsDouble;
+          FMXJValue := FMXJObj.GetValue(TAG_STRING);
+          if Assigned(FMXJValue) and (FMXJValue is TJSONString) then
+            FMXObj.TagString := (FMXJValue as TJSONString).Value;
         end;
       finally
         FormJSONObject.Free;
@@ -183,7 +201,15 @@ begin
           tkProcedure:
             ;
         end;
-        FormJSONObject.AddPair(FMXObj.Name, FMXJObj)
+
+        // Tags
+        FMXJObj.AddPair(TAG,
+          TJSONNumber.Create(FMXObj.Tag));
+        FMXJObj.AddPair(TAG_FLOAT,
+          TJSONNumber.Create(FMXObj.TagFloat));
+        FMXJObj.AddPair(TAG_STRING, FMXObj.TagString);
+
+        FormJSONObject.AddPair(FMXObj.Name, FMXJObj);
       end;
       SaveState.Stream.Clear;
       W := TBinaryWriter.Create(SaveState.Stream);
